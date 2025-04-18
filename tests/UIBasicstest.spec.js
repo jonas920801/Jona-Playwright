@@ -63,7 +63,7 @@ test('Sucesfull login', async ({page})=>
 
 
 
-test.only('end to end', async ({page})=>
+test.only('sort elements by price: High to low', async ({page})=>
 
             {
            //const context= await browser.newContext();h
@@ -80,31 +80,12 @@ test.only('end to end', async ({page})=>
             await page.locator("#login-button").click();
             console.log(await page.locator("//div[@class='app_logo']").textContent());
             await expect(page.locator("//div[@class='app_logo']")).toHaveText("Swag Labs"); 
-            // add to cart
-            await page.locator("(//button[@id='add-to-cart-sauce-labs-backpack'])[1]").click();
-            await page.locator("//a[@class='shopping_cart_link']").click();
-            console.log(await page.locator("//div[@class='inventory_item_name']").textContent());
-            await expect(page.locator("//div[@class='inventory_item_name']")).toHaveText("Sauce Labs Backpack"); 
-            // checkout
-            await page.locator("//button[@id='checkout']").click();
-            console.log(await page.locator("//span[@class='title']").textContent());
-            await expect(page.locator("//span[@class='title']")).toHaveText("Checkout: Your Information"); 
-            
-            // fill form
-            await page.locator("//input[@id='first-name']").type("Jonathan");
-            await page.locator("//input[@id='last-name']").type("Vela");
-            await page.locator("//input[@id='postal-code']").type("111031");
-            await page.locator("//input[@id='continue']").click();
-            console.log(await page.locator("//span[@class='title']").textContent());
-            await expect(page.locator("//span[@class='title']")).toHaveText("Checkout: Overview"); 
-            // finish button
-            await page.locator("//button[@id='finish']").click();
+            // sort elements
 
-            console.log(await page.locator("//span[@class='title']").textContent());
-            await expect(page.locator("//span[@class='title']")).toHaveText("Checkout: Complete!"); 
-            console.log(await page.locator("//h2[normalize-space()='Thank you for your order!']").textContent());
-            await expect(page.locator("//h2[normalize-space()='Thank you for your order!']")).toHaveText("Thank you for your order!"); 
-
-            });
-    
+            const dropdown = page.locator(".product_sort_container");
+            await dropdown.selectOption("Price (high to low)");
+            await page.pause();
+        
+        });
+               
         
