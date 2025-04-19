@@ -63,7 +63,7 @@ test('Sucesfull login', async ({page})=>
 
 
 
-test.only('sort elements by price: High to low', async ({page})=>
+test('sort elements by price: High to low', async ({page})=>
 
             {
            //const context= await browser.newContext();h
@@ -89,3 +89,37 @@ test.only('sort elements by price: High to low', async ({page})=>
         });
                
         
+
+
+test.only('Cancel check out and delete Items', async ({page})=>
+
+            {
+           //const context= await browser.newContext();h
+           //const page = await context.newpage();
+            const cardTitles = page.locator(".inventory_item_name");
+            await page.goto("https://www.saucedemo.com");
+        
+           // get-tittle assertion
+           console.log (await page.title());
+           await expect(page).toHaveTitle("Swag Labs");
+            //css xpath
+            await page.locator("#user-name").type("standard_user");
+            await page.locator("#password").type("secret_sauce");
+            await page.locator("#login-button").click();
+            console.log(await page.locator("//div[@class='app_logo']").textContent());
+            await expect(page.locator("//div[@class='app_logo']")).toHaveText("Swag Labs"); 
+    
+           // add Items to cart
+            await page.locator("#add-to-cart-sauce-labs-backpack").click();
+            await page.locator("//button[@id='add-to-cart-test.allthethings()-t-shirt-(red)']").click();
+            await page.locator(".shopping_cart_link").click();
+            await page.locator("#checkout").click();
+            await page.locator("#cancel").click();
+            await page.locator("#continue-shopping").click();
+            await page.locator("#remove-sauce-labs-backpack").click();
+            await page.locator("button[id='remove-test.allthethings()-t-shirt-(red)']").click();
+            await page.locator(".shopping_cart_link").click();
+            console.log(await page.locator("//button[@id='continue-shopping']").textContent());
+            await expect(page.locator("//button[@id='continue-shopping']")).toHaveText("Continue Shopping"); 
+           
+            });
