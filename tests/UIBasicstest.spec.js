@@ -91,7 +91,7 @@ test('sort elements by price: High to low', async ({page})=>
         
 
 
-test.only('Cancel check out and delete Items', async ({page})=>
+test('Cancel check out and delete Items', async ({page})=>
 
             {
            //const context= await browser.newContext();h
@@ -123,3 +123,54 @@ test.only('Cancel check out and delete Items', async ({page})=>
             await expect(page.locator("//button[@id='continue-shopping']")).toHaveText("Continue Shopping"); 
            
             });
+
+
+
+test.only('end to end flow', async ({page})=>
+
+                {
+               //const context= await browser.newContext();h
+               //const page = await context.newpage();
+                const cardTitles = page.locator(".inventory_item_name");
+                await page.goto("https://www.saucedemo.com");
+            
+               // get-tittle assertion
+               console.log (await page.title());
+               await expect(page).toHaveTitle("Swag Labs");
+                //css xpath
+                await page.locator("#user-name").type("standard_user");
+                await page.locator("#password").type("secret_sauce");
+                await page.locator("#login-button").click();
+                console.log(await page.locator("//div[@class='app_logo']").textContent());
+                await expect(page.locator("//div[@class='app_logo']")).toHaveText("Swag Labs"); 
+        
+               // add Items to cart
+                await page.locator("#add-to-cart-sauce-labs-backpack").click();
+                await page.locator("#add-to-cart-sauce-labs-bike-light").click();
+                await page.locator("//button[@id='add-to-cart-sauce-labs-bolt-t-shirt']").click();
+                await page.locator("#add-to-cart-sauce-labs-fleece-jacket").click();
+                await page.locator("#add-to-cart-sauce-labs-onesie").click();
+                await page.locator("//button[@id='add-to-cart-test.allthethings()-t-shirt-(red)']").click();
+                await page.locator(".shopping_cart_link").click();
+
+
+                //  Checkout button
+                await page.locator("#checkout").click();
+
+
+                // Checkout information
+                await page.locator("#first-name").type("Jonathan"); 
+                await page.locator("#last-name").type("Vela");  
+                await page.locator("#postal-code").type("12345");
+                await page.locator("#continue").click();
+
+                // Checkout overview
+                console.log(await page.locator(".summary_total_label").textContent());
+                await expect(page.locator(".summary_total_label")).toHaveText("Total: $140.34");
+                await page.locator("#finish").click();
+
+                // Checkout complete
+                console.log(await page.locator("//h2[@class='complete-header']").textContent());
+                await expect(page.locator("//h2[@class='complete-header']")).toHaveText("Thank you for your order!");
+                       
+                });
