@@ -126,7 +126,7 @@ test('Cancel check out and delete Items', async ({page})=>
 
 
 
-test.only('end to end flow', async ({page})=>
+test('end to end flow', async ({page})=>
 
                 {
                //const context= await browser.newContext();h
@@ -172,5 +172,38 @@ test.only('end to end flow', async ({page})=>
                 // Checkout complete
                 console.log(await page.locator("//h2[@class='complete-header']").textContent());
                 await expect(page.locator("//h2[@class='complete-header']")).toHaveText("Thank you for your order!");
+
+            });
+
+test.only('See, add and remove element', async ({page})=>
+
+                    {
+                   //const context= await browser.newContext();h
+                   //const page = await context.newpage();
+                    const cardTitles = page.locator(".inventory_item_name");
+                    await page.goto("https://www.saucedemo.com");
+                
+                   // get-tittle assertion
+                   console.log (await page.title());
+                   await expect(page).toHaveTitle("Swag Labs");
+                    //css xpath
+                    await page.locator("#user-name").type("standard_user");
+                    await page.locator("#password").type("secret_sauce");
+                    await page.locator("#login-button").click();
+                    console.log(await page.locator("//div[@class='app_logo']").textContent());
+                    await expect(page.locator("//div[@class='app_logo']")).toHaveText("Swag Labs"); 
+            
+                    // add Item
+                    await page.locator("a[id='item_1_title_link'] div[class='inventory_item_name ']").click();
+                    await page.locator("#add-to-cart").click();
+                    // remove Item
+                    await page.locator("#remove").click();
+                    // validate item
+                    console.log(await page.locator(".inventory_details_price").textContent());
+                    await expect(page.locator(".inventory_details_price")).toHaveText("$15.99");
+                    console.log(await page.locator(".inventory_details_name.large_size").textContent());
+                    await expect(page.locator(".inventory_details_name.large_size")).toHaveText("Sauce Labs Bolt T-Shirt"); 
+                    // go back
+                    await page.locator("//img[@alt='Go back']").click();
                        
                 });
