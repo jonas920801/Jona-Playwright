@@ -2,7 +2,7 @@ const {test,expect}= require('@playwright/test');
 
 
 
-test.only ('Browser context playwright test', async ({browser})=>
+test('Browser context playwright test', async ({browser})=>
 
 {
 const context= await browser.newContext();
@@ -12,48 +12,23 @@ await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/lo
 });
 
 
-test ('Error message test', async ({page})=>
+test.only ('Error message login', async ({page})=>
 
     {
    //const context= await browser.newContext();h
    //const page = await context.newpage();
-    await page.goto("https://www.saucedemo.com");
+    await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
    // get-tittle assertion
    console.log (await page.title());
-   await expect(page).toHaveTitle("Swag Labs");
+   await expect(page).toHaveTitle("OrangeHRM");
     //css xpath
-    await page.locator("#user-name").type("standard_user");
-    await page.locator("#password").type("wisin");
-    await page.locator("#login-button").click();
-    console.log(await page.locator("h3[data-test='error']").textContent());
-    await expect(page.locator("h3[data-test='error']")).toHaveText("Epic sadface: Username and password do not match any user in this service"); 
+    await page.locator("input[placeholder='Username']").type("Admin");
+    await page.locator("//input[@placeholder='Password']").type("yandel");
+    await page.locator("button[type='submit']").click();
+    console.log(await page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']").textContent());
+    await expect(page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']")).toHaveText("Invalid credentials"); 
 
     });
 
-
-test('Sucesfull login', async ({page})=>
-
-        {
-       //const context= await browser.newContext();h
-       //const page = await context.newpage();
-        const cardTitles = page.locator(".inventory_item_name");
-        await page.goto("https://www.saucedemo.com");
-    
-       // get-tittle assertion
-       console.log (await page.title());
-       await expect(page).toHaveTitle("Swag Labs");
-        //css xpath
-        await page.locator("#user-name").type("standard_user");
-        await page.locator("#password").type("secret_sauce");
-        await page.locator("#login-button").click();
-        console.log(await page.locator("//div[@class='app_logo']").textContent());
-        await expect(page.locator("//div[@class='app_logo']")).toHaveText("Swag Labs"); 
-
-       // const allTitle = await cardTitles.allTextcontent();
-        console.log(await cardTitles.first().textContent());
-        console.log(await cardTitles.nth(1).textContent());
-        const allTitle = await cardTitles.allTextContents();
-        console.log(allTitle);
-        });
 
