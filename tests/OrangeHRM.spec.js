@@ -12,23 +12,26 @@ await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/lo
 });
 
 
-test.only ('Error message login', async ({page})=>
+test.only('Error message login', async ({page})=>
 
     {
-   //const context= await browser.newContext();h
-   //const page = await context.newpage();
+   
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
-   // get-tittle assertion
+   // get-tittle tab assertion 
    console.log (await page.title());
    await expect(page).toHaveTitle("OrangeHRM");
-    //css xpath
+
+    //css xpath loginng feature
     await page.locator("input[placeholder='Username']").type("Admin");
     await page.locator("//input[@placeholder='Password']").type("yandel");
     await page.locator("button[type='submit']").click();
+
+    //error alert
     console.log(await page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']").textContent());
     await expect(page.locator("//div[@class='oxd-alert-content oxd-alert-content--error']")).toHaveText("Invalid credentials"); 
 
     });
 
 
+// npx playwright test tests/OrangeHRM.spec.js --debug  ----- command to run the test in debug mode

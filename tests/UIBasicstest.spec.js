@@ -207,3 +207,7 @@ test.only('See, add and remove element', async ({page})=>
                     await page.locator("//img[@alt='Go back']").click();
                        
                 });
+
+
+
+
