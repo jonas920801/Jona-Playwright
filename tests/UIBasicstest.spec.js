@@ -175,7 +175,7 @@ test('end to end flow', async ({page})=>
 
             });
 
-test.only('See, add and remove element', async ({page})=>
+test('See, add and remove element', async ({page})=>
 
                     {
                    //const context= await browser.newContext();h
