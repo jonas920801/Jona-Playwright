@@ -18,6 +18,8 @@ import { defineConfig, devices } from '@playwright/test';
   use: {
     browserName: 'chromium',
     headless: false,
+    screenshot: 'on',
+    trace: 'on',
    
   },
 
