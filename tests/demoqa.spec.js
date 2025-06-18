@@ -85,7 +85,7 @@ test('Element Check box ', async ({page})=>
             });
 
 
-test.only('Radio button ', async ({page})=>
+test('Radio button ', async ({page})=>
 
               {
              
@@ -109,5 +109,67 @@ test.only('Radio button ', async ({page})=>
 
           
           });
+
+test('form and send ', async ({page})=>
+
+            {
+           
+            await page.goto("https://demoqa.com/");
+        
+           // get-tittle tab assertion 
+           console.log (await page.title());
+           await expect(page).toHaveTitle("DEMOQA");
+           await page.locator("//div[@class='category-cards']//div[1]//div[1]//div[2]//*[name()='svg']").click();
+           await page.locator("//span[normalize-space()='Radio Button']").click();
+
+
+          // Click the "Impressive" radio button using the label text
+          await page.locator("//label[@for='impressiveRadio']").click();
+
+
+          // Optional: verify that it was selected
+          const isChecked = await page.locator('input#impressiveRadio').isChecked();
+          console.log('Is "Impressive" selected?', isChecked); // should be true
+          
+
+        
+        });
+
+
+
+test.only('Web Tables ', async ({page})=>
+
+          {
+         
+          await page.goto("https://demoqa.com/");
+      
+         // get-tittle tab assertion 
+         console.log (await page.title());
+         await expect(page).toHaveTitle("DEMOQA");
+         await page.locator("//div[@class='category-cards']//div[1]//div[1]//div[2]//*[name()='svg']").click();
+         await page.locator("div[class='element-list collapse show'] li[id='item-3'] span[class='text']").click();
+         await page.locator("#addNewRecordButton").click();
+
+    
+        // Fill out the registration form
+        await page.locator("//input[@id='firstName']").type("Jonathan");
+        await page.locator("//input[@id='lastName']").type("Vela");
+        await page.locator("//input[@id='userEmail']").type("emailtestjonathan@gmail.com");
+        await page.locator("//input[@id='age']").type("99");
+        await page.locator("//input[@id='salary']").type("30000000");
+        await page.locator("//input[@id='department']").type("Kelowna");
+        await page.locator("//button[@id='submit']").click();
+
+        
+       //Verify that the new record was added 
+        await page.locator("//input[@id='searchBox']").type("Jonathan");
+        const newRecord = await page.locator("//div[@class='rt-tbody']//div[contains(text(), 'Jonathan')]").isVisible();
+        console.log('Is the new record visible?', newRecord); // should be true
+        expect(newRecord).toBeTruthy();
+
+      });
+
+
+
 
     //npx playwright codegen http://google.com  run this command in terminal to generate code for the test
